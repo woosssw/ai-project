@@ -1,0 +1,15 @@
+flask
+psycopg2-binary
+Flask-SQLAlchemy
+Flask-CORS
+Flask-WTF
+opencv-python
+pytorchvideo
+lap
+h5py
+einops
+tensorboardX
+fire
+tensorboard
+wget
+matplotlib

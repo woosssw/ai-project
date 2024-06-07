@@ -1,0 +1,12 @@
+opencv-python
+pytorchvideo
+h5py
+einops
+tensorboardX
+fire
+tensorboard
+wget
+flask
+psycopg2-binary
+Flask-SQLAlchemy
+Flask-CORS

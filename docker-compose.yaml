@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  flaskapp:
+    container_name: flaskapp
+    image: flaskapp:1.0.0
+    build:
+      context: ./backend
+      dockerfile: flask.dockerfile
+    volumes:
+      - ./backend:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    env_file:
+        - .env
+    ports:
+      - '4000:4000'
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+# services:
+#   ai_project:
+#     build: .
+#     # image: project_gcn
+#     # container_name: testests
+#     # ports:
+#     #   - "8888:8888"
+#     #   - "6006:6006"
+#     volumes:
+#       - C:/Users/AI02/Desktop/web:/workspace
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               capabilities: [gpu]
+#     ipc: host

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>SIMILARITY IMG with Narosu</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+  body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+  body {font-size:16px;}
+
+  .upimg img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
+  .upimg img:hover{opacity: 1}
+  .w3-quarter img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
+  .w3-quarter img:hover{opacity: 1}
+
+  .image {
+    margin: 5px; /* Margin between images */
+    max-width: calc(100% - 10px); /* Adjust the max-width to fit 3 images per row */
+    width: 100%; /* Ensure images fill the available space */
+  }
+
+  /* Sim input style */
+  .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 50%;
+  }
+
+  .form__field {
+    font-family: inherit;
+    width: 20%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:placeholder-shown ~ .form__label {
+      font-size: 1.3rem;
+      cursor: text;
+      top: 20px;
+    }
+  }
+
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: gray;
+  }
+
+  .form__field:focus {
+    ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: primary;
+      font-weight: 700;
+    }
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, primary, secondary);
+    border-image-slice: 1;
+  }
+
+  .form__field {
+    &:required,
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+
+  /* upload input style */
+  input[type=submit]{
+    background-color: #0964b0;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  input[type="file"] {
+    position: relative;
+  }
+
+  input[type="file"]::file-selector-button {
+    width: 136px;
+    color: transparent;
+  }
+
+  /* Faked label styles and icon */
+  input[type="file"]::before {
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    left: 16px;
+    height: 20px;
+    width: 20px;
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+  }
+
+  input[type="file"]::after {
+    position: absolute;
+    pointer-events: none;
+    top: 11px;
+    left: 40px;
+    color: #0964b0;
+    content: "Upload File";
+  }
+
+  input[type="file"]::file-selector-button {
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+    margin-right: 16px;
+    transition: background-color 200ms;
+  }
+
+  input[type="file"]::file-selector-button:hover {
+    background-color: #f3f4f6;
+  }
+
+  input[type="file"]::file-selector-button:active {
+    background-color: #e5e7eb;
+  }
+</style>
+</head>
+
+<body> 
+  <!-- Sidebar/menu -->
+  <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+    <div class="w3-container">
+      <h3 class="w3-padding-64"><b>Narosu</b></h3>
+    </div>
+    <div class="w3-bar-block">
+      <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+      <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a> 
+      <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a> 
+      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Top menu on small screens -->
+  <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+    <span>Company Name</span>
+  </header>
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:340px;margin-right:40px">
+    <!-- Header -->
+    <div class="w3-container" style="margin-top:80px" id="showcase">
+      <h1 class="w3-jumbo"><b>SIMILARITY IMG with Narosu</b></h1>
+      <h1 class="w3-xxxlarge w3-text-red"><b>Showcase.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+    </div>
+
+    <form action = "/upload" method="POST" enctype="multipart/form-data"> 
+      <input type="file" name="file" multiple /> 
+      </br>
+      <input type="submit" value="Upload">
+
+      </br></br>
+      <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Number" name="number" id='number' value="{{thres}}">
+        <label for="number" class="form__label">Min of Similarity</label>
+      </div>
+      </br></br>
+    </form> 
+
+    {% if file_url_1 %}
+      <div class="upimg"> 
+        <img src="{{ file_url_0 }}" style="width:10%" onclick="onClick(this)" alt="Image Homepage Link">
+        <h4> Upload image </h4>
+      </div>
+
+      <div class="w3-row">
+        <div class="w3-quarter">
+          {% if thres > sim_1_res %}
+            <h1> There is no similar image. </h1>
+          {% endif %}
+        </div>
+
+        <div class="w3-quarter">
+          {% if sim_1_res >= thres %}
+            <img class="image" src="{{ file_url_1 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_1 }} </h1>
+          {% endif %}
+          {% if sim_5_res >= thres %}
+            <img class="image" src="{{ file_url_5 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_5 }} </h1>
+          {% endif %}
+        </div>
+
+        <div class="w3-quarter">
+          {% if sim_2_res >= thres %}
+            <img class="image" src="{{ file_url_2 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_2 }} </h1>
+          {% endif %}
+          {% if sim_6_res >= thres %}
+            <img class="image" src="{{ file_url_6 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_6 }} </h1>
+          {% endif %}
+        </div>
+
+        <div class="w3-quarter">
+          {% if sim_3_res >= thres %}
+            <img class="image" src="{{ file_url_3 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_3 }} </h1>
+          {% endif %}
+          {% if sim_7_res >= thres %}
+            <img class="image" src="{{ file_url_7 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_7 }} </h1>
+          {% endif %}
+        </div>
+
+        <div class="w3-quarter">
+          {% if sim_4_res >= thres %}
+            <img class="image" src="{{ file_url_4 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_4 }} </h1>
+          {% endif %}
+          {% if sim_8_res >= thres %}
+            <img class="image" src="{{ file_url_8 }}" onclick="onClick(this)" alt="Image Homepage Link">
+            <h1> {{ sim_8 }} </h1>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Modal for full size images on click-->
+    <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+      <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+      <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+        <img id="img01" class="w3-image">
+        <p id="caption"></p>
+      </div>
+    </div>
+
+    <!-- Packages / Pricing Tables -->
+    <div class="w3-container" id="packages" style="margin-top:75px">
+      <h1 class="w3-xxxlarge w3-text-red"><b>Packages.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+      <p>Some text our prices. Lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure</p>
+    </div>
+
+    <div class="w3-row-padding">
+      <div class="w3-half w3-margin-bottom">
+        <ul class="w3-ul w3-light-grey w3-center">
+          <li class="w3-dark-grey w3-xlarge w3-padding-32">Basic</li>
+          <li class="w3-padding-16">Floorplanning</li>
+          <li class="w3-padding-16">10 hours support</li>
+          <li class="w3-padding-16">Photography</li>
+          <li class="w3-padding-16">20% furniture discount</li>
+          <li class="w3-padding-16">Good deals</li>
+          <li class="w3-padding-16">
+            <h2>$ 199</h2>
+            <span class="w3-opacity">per room</span>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-button w3-white w3-padding-large w3-hover-black">Sign Up</button>
+          </li>
+        </ul>
+      </div>
+          
+      <div class="w3-half">
+        <ul class="w3-ul w3-light-grey w3-center">
+          <li class="w3-red w3-xlarge w3-padding-32">Pro</li>
+          <li class="w3-padding-16">Floorplanning</li>
+          <li class="w3-padding-16">50 hours support</li>
+          <li class="w3-padding-16">Photography</li>
+          <li class="w3-padding-16">50% furniture discount</li>
+          <li class="w3-padding-16">GREAT deals</li>
+          <li class="w3-padding-16">
+            <h2>$ 249</h2>
+            <span class="w3-opacity">per room</span>
+          </li>
+          <li class="w3-light-grey w3-padding-24">
+            <button class="w3-button w3-red w3-padding-large w3-hover-black">Sign Up</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Contact -->
+    <div class="w3-container" id="contact" style="margin-top:75px">
+      <h1 class="w3-xxxlarge w3-text-red"><b>Contact.</b></h1>
+      <hr style="width:50px;border:5px solid red" class="w3-round">
+      <p>Do you want us to style your home? Fill out the form and fill me in with the details :) We love meeting new people!</p>
+      <form action="/action_page.php" target="_blank">
+        <div class="w3-section">
+          <label>Name</label>
+          <input class="w3-input w3-border" type="text" name="Name" required>
+        </div>
+        <div class="w3-section">
+          <label>Email</label>
+          <input class="w3-input w3-border" type="text" name="Email" required>
+        </div>
+        <div class="w3-section">
+          <label>Message</label>
+          <input class="w3-input w3-border" type="text" name="Message" required>
+        </div>
+        <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Send Message</button>
+      </form>  
+    </div>
+  </div>
+
+<!-- W3.CSS Container -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+
+<script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+  
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  // Modal Image Gallery
+  function onClick(element) {
+    document.getElementById("img01").src = element.src;
+    document.getElementById("modal01").style.display = "block";
+    var captionText = document.getElementById("caption");
+    captionText.innerHTML = element.alt;
+  }
+  </script>
+
+</body> 
+</html> 
